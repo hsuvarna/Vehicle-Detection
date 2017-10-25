@@ -63,34 +63,38 @@ I trained a linear SVM using...
 | Linear SVC |  RGB       | 9      |   8        |   ALL        | 32          | 32       | 0.96     | 21.77     |
 | Linear SVC |  YUV       | 9      |   8        |   ALL        | 32          | 32       | 0.97     | 19.22     |
 | Linear SVC |  YCrCb     | 11     |   8        |   ALL        | 32          | 32       | 0.97     | 24.13     |
-| Linear SVC |  YCrCb     | 11     |   16       |   ALL        | 32          | 32       | 0.98     | 1 .13     |
+| Linear SVC |  YCrCb     | 11     |   16       |   ALL        | 32          | 32       | 0.98     | 18 .13    |
+
+The results and accuracy were better with YCrCb, orient=11 PixPerCell=16 and all HOG channels. Did not need spatial bin and color bin features.
+
+See the sample image after find_cars()
+![alt text][image3]
 
 ###Sliding Window Search
 
-####1. Describe how (and identify where in your code) you implemented a sliding window search.  How did you decide what scales to search and how much to overlap windows?
+The sliding window algorithm was implemented using the experimental ystart and ymin parameters. First I checked on on eimage for values of 400, 640. Based on that I refined these in a for loop at the intervals of 4 between 390 and 640. It worked well. See the example below.
 
-I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
-
-![alt text][image3]
+![alt text][image4]
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
-Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
+I also used heatmaps, scikit labels and heatmap thresholding as explained in the udacity lecture. These gave good results in the real video in eliminating false positives. See sample images.
 
-![alt text][image4]
+
 ---
 
 ### Video Implementation
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./ai_cars.mp4)
+
+[video1]
 
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-I recorded the positions of positive detections in each frame of the video.  From the positive detections I created a heatmap and then thresholded that map to identify vehicle positions.  I then used `scipy.ndimage.measurements.label()` to identify individual blobs in the heatmap.  I then assumed each blob corresponded to a vehicle.  I constructed bounding boxes to cover the area of each blob detected.  
-
-Here's an example result showing the heatmap from a series of frames of video, the result of `scipy.ndimage.measurements.label()` and the bounding boxes then overlaid on the last frame of video:
+  
+The methods add_heat(), apply_threshold(), draw_labelled_boxes() illustrate filtering false positives using heatmaps and labels.
 
 ### Here are six frames and their corresponding heatmaps:
 
@@ -101,6 +105,10 @@ Here's an example result showing the heatmap from a series of frames of video, t
 
 ### Here the resulting bounding boxes are drawn onto the last frame in the series:
 ![alt text][image7]
+
+![alt text][image8]
+
+
 
 
 
