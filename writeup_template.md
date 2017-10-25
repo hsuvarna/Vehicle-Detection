@@ -1,7 +1,3 @@
-##Writeup Template
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
 
 **Vehicle Detection Project**
 
@@ -103,10 +99,11 @@ The methods add_heat(), apply_threshold(), draw_labelled_boxes() illustrate filt
 ### Here is the output of `scipy.ndimage.measurements.label()` on the integrated heatmap from all six frames:
 ![alt text][image6]
 
+![alt text][image8]
+
 ### Here the resulting bounding boxes are drawn onto the last frame in the series:
 ![alt text][image7]
 
-![alt text][image8]
 
 
 
@@ -118,5 +115,16 @@ The methods add_heat(), apply_threshold(), draw_labelled_boxes() illustrate filt
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+1. I have not tested this on two lane roads. But it should work if my training images had car front facing images to detect opposite coming cars.
+
+2. Same as above point for vehicles behind my car to check blind spots before changing lanes.
+
+3. Need to test on roads where car showrooms are there adjacent to the road.
+
+4. For the project video, sliding windows range finding was not hard but took time.
+
+5. Filtering the code for color histograms, spatial bins in sliding windows introduced some bugs. Took some time to fix them.
+
+6. Python asked me to reshape the hog features code in sliding windows method. The code given oin the lecture did not work straight.
+
 
